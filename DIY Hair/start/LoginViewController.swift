@@ -115,7 +115,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
             case .success(let user):
                 self.requestToken1(userID:self.userTF.text!)
                 button.startSwitchAnimation(1, completion: { [unowned self]() -> () in
-                    self.performSegue(withIdentifier: "LoginSuccess", sender: nil)
+             
+                    let m=MyMoreViewController()
+                  
+                    self.navigationController?.pushViewController(m, animated: true)
+                    //navigationController?.pushViewController(chat!, animated: true)
+                    //self.performSegue(withIdentifier: "LoginSuccess", sender: nil)
                 })
                
                 break

@@ -21,20 +21,13 @@ class MyMoreViewController: UIViewController, UITableViewDataSource, UIScrollVie
     var bgImg: UIImageView!
     var bgImgHeight: CGFloat = 0
     var headerHeight: CGFloat = 0
-    var originalFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
-    var tableTitile=["个人设置","安全设置","小小设置"]
-     var personSetup=["双卡与移动网络","WLAN","个人热点","蓝牙","勿扰模式","状态栏与通知"]
-    var securitySetup=["定位服务","账号与同步","云服务","黑名单","相册","指纹识别"]
-     var littleSetup=["退出登录"]
-     var image1=["1","2","3","4","5","6","7","8"]
-     var image2=["14","13","7","8","9","10","11","12"]
+    var originalFrame = CGRect(x: 0, y: 80, width: 0, height: 0)
+  
     let ratio: CGFloat = 880/1279// 图片宽高比例
     
     let cellId = "UITableViewCell"
     let myimge=UIImage(named: "22")
-    let images:[UIImage] = [UIImage(named: "badoo")!,UIImage(named: "behance")!,UIImage(named: "deviantart")!]
-    let images2:[UIImage] = [UIImage(named: "dribbble")!,UIImage(named: "facebook")!,UIImage(named: "flickr")!]
-    let images3:[UIImage] = [UIImage(named: "22")!,UIImage(named: "23")!,UIImage(named: "24")!,UIImage(named: "25")!]
+
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +35,9 @@ class MyMoreViewController: UIViewController, UITableViewDataSource, UIScrollVie
       
         tableView.rowHeight = 45
         bgImgHeight = view.frame.width*ratio// 根据图片比例计算headerView高度
-        headerHeight = bgImgHeight - 64
+        headerHeight = bgImgHeight - 170
         
-        bgImg = UIImageView.init(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: bgImgHeight))
+        bgImg = UIImageView.init(frame: CGRect(x: 0, y:80, width: view.frame.width, height: bgImgHeight))
         bgImg.image = UIImage.init(named: "photo.jpeg")
         //    tableView.insertSubview(img, at: 0)
         
@@ -56,13 +49,13 @@ class MyMoreViewController: UIViewController, UITableViewDataSource, UIScrollVie
         // scrollView滑动的本质，是修改bounds
         //    tableView.contentInset = UIEdgeInsets(top: view.frame.width*880/1279, left: 0, bottom: 0, right: 0)
         
-        let headerView = UIView(frame: CGRect.init(x: 0, y: 0, width: view.frame.width, height: headerHeight))
+        let headerView = UIView(frame: CGRect.init(x: 0, y: 80, width: view.frame.width, height: headerHeight))
         headerView.backgroundColor = .clear
         tableView.tableHeaderView = headerView
        
  
        headerRefresh()
-        footerRefresh()
+    
        self.tableView?.reloadData()
 //        let tagRecognizer=UITapGestureRecognizer(target: self, action: #selector(tag(recognizer:)))
 //       images3[0].addGestureRecognizer(tagRecognizer)
@@ -97,7 +90,9 @@ class MyMoreViewController: UIViewController, UITableViewDataSource, UIScrollVie
         let chat = RCConversationViewController(conversationType: RCConversationType.ConversationType_PRIVATE, targetId:  (idString))
         
         chat?.title =  idString
-        self.present(chat!, animated: true, completion: nil)
+        self.navigationController?.pushViewController(chat!, animated: true)
+
+       //self.present(chat!, animated: true, completion: nil)
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
@@ -124,14 +119,14 @@ class MyMoreViewController: UIViewController, UITableViewDataSource, UIScrollVie
             let alpha = yOffset/headerHeight
             navBarView.backgroundColor = UIColor.white.withAlphaComponent(alpha)
             
-            navBarTitle.textColor = .white
+          
          
           
             //navBarRightBtn.setImage(UIImage.init(named: "add.png"), for: .normal)
         } else {// 超过导航栏底部
             navBarView.backgroundColor = .white
             
-            navBarTitle.textColor = .black
+          
           
           
            // navBarRightBtn.setImage(UIImage.init(named: "add_sel.png"), for: .normal)
@@ -181,28 +176,7 @@ class MyMoreViewController: UIViewController, UITableViewDataSource, UIScrollVie
         
     }
     
-     func footerRefresh(){
-        
-        print("footerRefresh\n\n\n\n\n\n\n\n\n\n")
-        let query = AVQuery(className: "Sharingexperience")
-        query.order(byDescending: "createdAt")
-        query.limit = 20
-        query.skip = self.dataArray.count
     
-        
-        query.findObjectsInBackground { (results, error) -> Void in
-           // self.tableView?.mj_footer.endRefreshing()
-            
-            if let Result=results{
-                self.dataArray.removeAllObjects()
-                self.dataArray.addObjects(from: (Result))
-                self.tableView?.reloadData()
-            }
-            
-            
-        }
-        
-    }
 
 //    func requestToken1(userID:String) -> Void {
 //        let dicUser = ["userId":userID,
